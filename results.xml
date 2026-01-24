@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1769262975" />
+    <testcase name="mips_cpi_test" classname="toplevel_tb" file="/home/blackbox/Documents/work/riscv/tests/toplevel_tb.py" lineno="5" time="0.000606536865234375" sim_time_ns="135.0" ratio_time="222575.09433962265" />
+  </testsuite>
+</testsuites>

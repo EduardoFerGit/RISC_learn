@@ -1,0 +1,77 @@
+# 1. Get 5 and 12 into RegFile
+addi $s0, $zero, 5      # $s0 = 5
+addi $s1, $zero, 12     # $s1 = 12
+
+# 2. Add them
+add  $s2, $s0, $s1      # $s2 = 5 + 12 = 17
+
+# 3. Store 17 into Data Memory (Address 0)
+sw   $s2, 0($zero)      # Mem[0] = 17
+
+# 4. Load that value back into a different register
+lw   $s3, 0($zero)      # $s3 = Mem[0] (which is 17)
+
+# 5. Add 2 to it
+addi $s4, $s3, 2        # $s4 = 17 + 2 = 19
+
+# 6. Store final value in another Data Memory register (Address 4)
+sw   $s4, 4($zero)      # Mem[4] = 19
+
+# 7. Infinite Loop to stop PC
+loop:
+j    loop
+
+##--test_all_commands--##
+
+# --- Comprehensive Test Suite ---
+# 1. Test R-Type (ADD, SUB, AND, OR, SLT)
+addi $s0, $zero, 10
+addi $s1, $zero, 5
+add  $t0, $s0, $s1    # $t0 = 15
+sub  $t1, $s0, $s1    # $t1 = 5
+and  $t2, $s0, $s1    # $t2 = 10 & 5 = 0
+or   $t3, $s0, $s1    # $t3 = 10 | 5 = 15
+slt  $t4, $s1, $s0    # $t4 = (5 < 10) = 1
+
+# 2. Test BEQ & J (Branching)
+beq  $t4, $zero, fail # If SLT failed (t4=0), go to fail
+j    test_mem         # Jump to next test
+
+fail:
+addi $gp, $zero, 1    # Status code 1 = Failure
+sw   $gp, 100($zero)  # Write error to address 100
+j    done
+
+test_mem:
+# 3. Test LW & SW
+sw   $t0, 12($zero)   # Store 15
+lw   $s2, 12($zero)   # Load 15
+beq  $s2, $t0, pass   # If match, go to pass
+j    fail
+
+pass:
+addi $gp, $zero, 1337 # Status code 1337 = ELITE PASS
+sw   $gp, 100($zero)  # Write success to address 100
+
+done:
+j    done
+
+2010000a // 001000 00000 10000 0000000000001010 | addi $s0, $zero, 10
+20110005 // 001000 00000 10001 0000000000000101 | addi $s1, $zero, 5
+02114020 // 000000 10000 10001 01000 00000 100000 | add  $t0, $s0, $s1
+02114822 // 000000 10000 10001 01001 00000 100010 | sub  $t1, $s0, $s1
+02115024 // 000000 10000 10001 01010 00000 100100 | and  $t2, $s0, $s1
+02115825 // 000000 10000 10001 01011 00000 100101 | or   $t3, $s0, $s1
+0230602a // 000000 10001 10000 01100 00000 101010 | slt  $t4, $s1, $s0
+11800002 // 000100 01100 00000 0000000000000010 | beq  $t4, $zero, fail (PC+4+8)
+0800000c // 000010 00000000000000000000001100     | j    test_mem (Addr 12)
+201c0001 // 001000 00000 11100 0000000000000001 | addi $gp, $zero, 1 (Fail status)
+ac1c0064 // 101011 00000 11100 0000000001100100 | sw   $gp, 100($zero)
+08000012 // 000010 00000000000000000000010010     | j    done (Addr 18)
+ac08000c // 101011 00000 01000 0000000000001100 | sw   $t0, 12($zero)
+8c12000c // 100011 00000 10010 0000000000001100 | lw   $s2, 12($zero)
+12480001 // 000100 10010 01000 0000000000000001 | beq  $s2, $t0, pass (PC+4+4)
+08000009 // 000010 00000000000000000000001001     | j    fail (Addr 9)
+201c0539 // 001000 00000 11100 0000010100111001 | addi $gp, $zero, 1337 (Success status)
+ac1c0064 // 101011 00000 11100 0000000001100100 | sw   $gp, 100($zero)
+08000012 // 000010 00000000000000000000010010     | j    done (Addr 18)

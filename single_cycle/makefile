@@ -8,6 +8,7 @@ TOPLEVEL_LANG ?= verilog
 VERILOG_SOURCES += $(wildcard $(PWD)/rtl/*.sv)
 
 # 2. Set the Top Level (the module cocotb will "talk" to)
+#----Single_Cycle----
 #TOPLEVEL = mux2_1
 #TOPLEVEL = adder
 #TOPLEVEL = ls2
@@ -19,11 +20,13 @@ VERILOG_SOURCES += $(wildcard $(PWD)/rtl/*.sv)
 #TOPLEVEL = alu_decoder
 #TOPLEVEL = main_decoder
 #TOPLEVEL = control_unit
-TOPLEVEL = toplevel
+#TOPLEVEL = toplevel
+
 
 export PYTHONPATH := $(PWD)/tests:$(PYTHONPATH)
 
 # 3. Set the Python test file (test_alu.py)
+#----Single_Cycle----
 #MODULE = mux2_1_tb 
 #MODULE = adder_tb
 #MODULE = ls2_tb
@@ -35,7 +38,8 @@ export PYTHONPATH := $(PWD)/tests:$(PYTHONPATH)
 #MODULE = alu_decoder_tb
 #MODULE = main_decoder_tb
 #MODULE = control_unit_tb
-MODULE = toplevel_tb
+#MODULE = toplevel_tb
+
 
 # 4. Verilator specific arguments
 # -I allows Verilator to find `include "file.sv"` statements

@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1769766376" />
+    <testcase name="extend_test" classname="extend_tb" file="/home/blackbox/Documents/work/riscv/pipelined/tests/extend_tb.py" lineno="4" time="0.00011110305786132812" sim_time_ns="70.0" ratio_time="630045.6652360515" />
+  </testsuite>
+</testsuites>

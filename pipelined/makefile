@@ -22,7 +22,9 @@ VERILOG_SOURCES += $(wildcard $(PWD)/rtl/*.sv)
 # TOPLEVEL = mux3
 # TOPLEVEL = mux4
 # TOPLEVEL = eqcomp
-TOPLEVEL = extend
+# TOPLEVEL = extend
+# TOPLEVEL = dmem
+TOPLEVEL = top
 
 export PYTHONPATH := $(PWD)/tests:$(PYTHONPATH)
 
@@ -38,7 +40,9 @@ export PYTHONPATH := $(PWD)/tests:$(PYTHONPATH)
 # MODULE = mux3_tb
 # MODULE = mux4_tb
 # MODULE = eqcomp_tb
-MODULE = extend_tb
+# MODULE = extend_tb
+# MODULE = dmem_tb
+MODULE = top_tb
 
 # 4. Verilator specific arguments
 # -I allows Verilator to find `include "file.sv"` statements

@@ -1,21 +1,22 @@
 module dmem #(
     parameter WIDTH = 32
 )(
-    input logic clk, we , worb, // word or byte flag for load byte and store byte
-    input logic [WIDTH-1:0] a, wd,
+    input logic clk, we,
+    input logic [WIDTH-1:0] a, 
+    input logic [WIDTH-1:0] wd,
     output logic [WIDTH-1:0] rd
 );
 
 logic [31:0] RAM[63:0];
 
-assign rd = RAM[a[31:2]]; //word alligned
+logic [5:0] index;
+assign index = a[7:2];
 
-always @(posedge clk)
+
+assign rd = RAM[index]; //word alligned
+
+always_ff @(posedge clk)
     if (we) begin 
-        if (worb) begin
-            RAM[a[31:2]] [7:0] = wd[7:0];
-        end else begin
-            RAM[a[31:2]] = wd;
-        end
+        RAM[index] = wd;
     end
 endmodule

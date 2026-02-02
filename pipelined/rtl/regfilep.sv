@@ -12,7 +12,7 @@ module regfilep #(
     logic [31:0] rf [31:0];
 
     // 2. Write Logic: Only happens on the rising edge of the clock
-    always_ff @(negedge clk) begin
+    always_ff @(posedge clk) begin
         if (we3) begin
             rf[wa3] <= wd3;
         end

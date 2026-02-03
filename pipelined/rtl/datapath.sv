@@ -17,7 +17,7 @@ module datapath #(
 
     output logic [6:0] op,
     output logic [2:0] funct3,
-    output logic funct7b5,
+    output logic [6:0] funct7,
 
     output logic [4:0] rs1D,
     output logic [4:0] rs2D,
@@ -116,7 +116,7 @@ flopenrc #(
 );
 assign op = instrD[6:0];
 assign funct3 = instrD[14:12];
-assign funct7b5 = instrD[30];
+assign funct7 = instrD[31:25];
 
 assign rs1D = instrD[19:15];
 assign rs2D = instrD[24:20];

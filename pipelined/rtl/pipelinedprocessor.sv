@@ -16,7 +16,7 @@ module pipelinedprocessor #(
 //----internal_signals----
 logic [6:0] op;
 logic [2:0] funct3;
-logic funct7b5;
+logic [6:0] funct7;
 
 logic stallF;
 logic stallD, flushD;
@@ -49,7 +49,7 @@ datapath #(
     .regwriteW(regwriteW),
     .op(op),
     .funct3(funct3),
-    .funct7b5(funct7b5),
+    .funct7(funct7),
     .rs1D(rs1D),
     .rs2D(rs2D),
     .flushE(flushE),
@@ -73,7 +73,7 @@ controller cu(
     .rst(rst),
     .op(op),
     .funct3(funct3),
-    .funct7b5(funct7b5),
+    .funct7(funct7),
     .immsrcD(immsrcD),
     .flushE(flushE),
     .zeroE(zeroE),

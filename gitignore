@@ -2,3 +2,4 @@
 __pycache__/
 pipelined/sim_build/
 single_cycle/sim_build/
+sim_build/

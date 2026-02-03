@@ -4,7 +4,7 @@ module controller (
     //--decode stage--
     input logic [6:0] op,
     input logic [2:0] funct3,
-    input logic funct7b5,
+    input logic [6:0] funct7,
     
     output logic [1:0] immsrcD,
 
@@ -15,7 +15,7 @@ module controller (
     output logic pcsrcE,
     output logic alusrcE,
     output logic [1:0] resultsrcE,
-    output logic [2:0] alucontrolE,
+    output logic [3:0] alucontrolE,
     
     //--memory stage--
     output logic regwriteM,
@@ -28,17 +28,17 @@ module controller (
 //internal signal
 logic [1:0] aluop;
 
-//--decode register signals--
+//--decode register signals--\\
 logic regwriteD;
 logic [1:0] resultsrcD;
 logic memwriteD;
 logic jumpD;
 logic branchD;
-logic [2:0] alucontrolD;
+logic [3:0] alucontrolD;
 logic alusrcD;
 //logic [1:0] immsrcD;
 
-//--execute register signals--
+//--execute register signals--\\
 logic regwriteE;
 //logic [1:0] resultsrcE;
 logic memwriteE;
@@ -47,11 +47,13 @@ logic branchE;
 //logic [2:0] alucontrolE;
 //logic alusrcE;
 logic [1:0] immsrcE;
+logic [2:0] funct3E;
 
-//--memory register signals--
+//--memory register signals--\\
 //logic regwriteM;
 logic [1:0] resultsrcM;
 //logic memwriteM;
+logic [2:0] funct3M;
 
 //--writeback signals--
 //logic regwriteW;
@@ -71,20 +73,20 @@ maindec md(
 aludec ad(
     .opb5(op[5]),
     .funct3(funct3),
-    .funct7b5(funct7b5),
+    .funct7(funct7),
     .aluop(aluop),
     .alucontrol(alucontrolD)
 );
 
 //--execute register--
 floprc #(
-    .WIDTH(10) 
+    .WIDTH(14)//plus funct3
 )regE(
     .clk(clk),
     .rst(rst),
     .clear(flushE),
-    .d({regwriteD,resultsrcD,memwriteD,jumpD,branchD,alucontrolD,alusrcD}),
-    .q({regwriteE,resultsrcE,memwriteE,jumpE,branchE,alucontrolE,alusrcE})
+    .d({regwriteD,resultsrcD,memwriteD,jumpD,branchD,alucontrolD,alusrcD,funct3}),
+    .q({regwriteE,resultsrcE,memwriteE,jumpE,branchE,alucontrolE,alusrcE,funct3E})
 );
 assign pcsrcE = ((zeroE & branchE)|jumpE);
 

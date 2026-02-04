@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1770142033" />
-    <testcase name="align_test" classname="align_tb" file="/home/blackbox/Documents/work/riscv/pipelined/tests/align_tb.py" lineno="4" time="0.00016188621520996094" sim_time_ns="40.0" ratio_time="247087.12812960235" />
+    <property name="random_seed" value="1770221598" />
+    <testcase name="storealign_test" classname="storealign_tb" file="/home/blackbox/Documents/work/riscv/pipelined/tests/storealign_tb.py" lineno="5" time="0.00022482872009277344" sim_time_ns="80.0" ratio_time="355826.4262990456" />
   </testsuite>
 </testsuites>

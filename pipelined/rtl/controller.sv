@@ -20,6 +20,7 @@ module controller (
     //--memory stage--
     output logic regwriteM,
     output logic memwriteM,
+    output logic [2:0] funct3M,
 
     //--writeback stage--
     output logic regwriteW,
@@ -53,7 +54,7 @@ logic [2:0] funct3E;
 //logic regwriteM;
 logic [1:0] resultsrcM;
 //logic memwriteM;
-logic [2:0] funct3M;
+//logic [2:0] funct3M;
 
 //--writeback signals--
 //logic regwriteW;
@@ -92,12 +93,12 @@ assign pcsrcE = ((zeroE & branchE)|jumpE);
 
 //--memory register--
 flopr #(
-    .WIDTH(4)
+    .WIDTH(7)
 )regM(
     .clk(clk),
     .rst(rst),
-    .d({regwriteE,resultsrcE,memwriteE}),
-    .q({regwriteM,resultsrcM,memwriteM})
+    .d({regwriteE,resultsrcE,memwriteE,funct3E}),
+    .q({regwriteM,resultsrcM,memwriteM,funct3M})
 );
 
 //--writeback register--

@@ -10,7 +10,7 @@ module top #(
 logic [WIDTH-1:0] pcF, instrF;
 
 //dmem sig\\
-logic [WIDTH-1:0] readdataW;
+logic [WIDTH-1:0] readdataM;
 
 pipelinedprocessor #(
     .WIDTH(WIDTH)
@@ -19,7 +19,7 @@ pipelinedprocessor #(
     .rst(rst),
     .instrF(instrF),
     .pcF(pcF),
-    .readdataM(readdataW),
+    .readdataM(readdataM),
     .memwriteM(memwrite),
     .aluresultM(dataadr),
     .writedataM(writedata)
@@ -37,6 +37,6 @@ dmem #(
     .we(memwrite),
     .a(dataadr),
     .wd(writedata),
-    .rd(readdataW)
+    .rd(readdataM)
 );
 endmodule

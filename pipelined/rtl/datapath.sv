@@ -26,7 +26,7 @@ module datapath #(
     input logic flushE,
     input logic [1:0] forwardAE,
     input logic [1:0] forwardBE,
-    input logic [2:0] alucontrolE,
+    input logic [3:0] alucontrolE,
     input logic alusrcE,
 
     output logic [4:0] rs1E,
@@ -36,6 +36,7 @@ module datapath #(
 
     //--memory stage--
     input logic [WIDTH-1:0] readdataM,
+    input logic [2:0] funct3M,
 
     output logic [WIDTH-1:0] aluresultM,
     output logic [WIDTH-1:0] writedataM,
@@ -69,6 +70,7 @@ logic [WIDTH-1:0] aluresultE;//reg
 
 //--memory stage--
 logic [WIDTH-1:0] pcplus4M;
+logic [WIDTH-1:0] allignoutM;
 
 //--writeback stage--
 logic [WIDTH-1:0] aluresultW, readdataW, pcplus4W;
@@ -222,9 +224,18 @@ flopr #(WIDTH)regM2(clk,rst,writedataE,writedataM);
 flopr #(5)regM3(clk,rst,rdE,rdM);
 flopr #(WIDTH)regM4(clk,rst,pcplus4E,pcplus4M);
 
+align #(
+    .WIDTH(WIDTH)
+)loadalign(
+    .a(readdataM),
+    .funct3(funct3M),
+    .addr(aluresultM[1:0]),
+    .y(allignoutM)
+);
+
 //--writeback stage--
 flopr #(WIDTH)regW1(clk,rst,aluresultM,aluresultW);
-flopr #(WIDTH)regW2(clk,rst,readdataM,readdataW);
+flopr #(WIDTH)regW2(clk,rst,allignoutM,readdataW);
 flopr #(5)regW3(clk,rst,rdM,rdW);
 flopr #(WIDTH)regW4(clk,rst,pcplus4M,pcplus4W);
 

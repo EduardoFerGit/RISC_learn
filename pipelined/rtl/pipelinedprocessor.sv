@@ -24,10 +24,11 @@ logic [1:0] immsrcD;
 logic [4:0] rs1D, rs2D;
 logic zeroE, pcsrcE, alusrcE, flushE;
 logic [1:0] resultsrcE, forwardAE, forwardBE;
-logic [2:0] alucontrolE;
+logic [3:0] alucontrolE;
 logic [4:0] rs1E, rs2E, rdE;
 logic regwriteM;
 logic [4:0] rdM;
+logic [2:0] funct3M;
 logic regwriteW;
 logic [1:0] resultsrcW;
 logic [4:0] rdW;
@@ -62,6 +63,7 @@ datapath #(
     .rdE(rdE),
     .zeroE(zeroE),
     .readdataM(readdataM),
+    .funct3M(funct3M),
     .aluresultM(aluresultM),
     .writedataM(writedataM),
     .rdM(rdM),
@@ -83,6 +85,7 @@ controller cu(
     .alucontrolE(alucontrolE),
     .regwriteM(regwriteM),
     .memwriteM(memwriteM),
+    .funct3M(funct3M),
     .regwriteW(regwriteW),
     .resultsrcW(resultsrcW)
 );
